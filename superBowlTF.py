@@ -16,7 +16,16 @@ dfeval = pd.read_csv('/home/pi/Documents/AI/DataSets/2019NFL.csv') # testing dat
 y_train = dftrain.pop('SB')
 y_eval = dfeval.pop('SB')
 
+dftrain.head()
 
+
+dftrain.describe()
+
+
+dftrain.shape
+
+
+y_train.head()
 
 
 CATEGORICAL_COLUMNS = ['Tm']
@@ -34,7 +43,7 @@ for feature_name in NUMERIC_COLUMNS:
 
 
 
-def make_input_fn(data_df, label_df, num_epochs=10, shuffle=True, batch_size=32):
+def make_input_fn(data_df, label_df, num_epochs=13, shuffle=True, batch_size=32):
   def input_function():  # inner function, this will be returned
     ds = tf.data.Dataset.from_tensor_slices((dict(data_df), label_df))  # create tf.data.Dataset object with data and its label
     if shuffle:
@@ -55,3 +64,10 @@ result = linear_est.evaluate(eval_input_fn)  # get model metrics/stats by testin
 
 
 print(result['accuracy'])  # the result variable is simply a dict of stats about our model
+pred_dicts = list(linear_est.predict(eval_input_fn))
+probs = pd.Series([pred['probabilities'][1] for pred in pred_dicts])
+
+#probs.plot(kind='hist', bins=20, title='predicted probabilities')
+
+#results = list(linear_est.predict(eval_input_fn))
+print(probs)
