@@ -1,4 +1,6 @@
-from __future__ import absolute_import, division, print_function, unicode_literals
+# -*- coding: utf-8 -*-
+
+#from __future__ import absolute_import, division, print_function, unicode_literals
 
 import numpy as np
 import pandas as pd
@@ -60,8 +62,7 @@ linear_est = tf.estimator.LinearClassifier(feature_columns=feature_columns)
 # We create a linear estimtor by passing the feature columns we created earlier
 
 linear_est.train(train_input_fn)  # train
-result = linear_est.evaluate(eval_input_fn)  # get model metrics/stats by testing on tetsing data
-
+result = linear_est.evaluate(eval_input_fn) 
 
 print(result['accuracy'])  # the result variable is simply a dict of stats about our model
 pred_dicts = list(linear_est.predict(eval_input_fn))
